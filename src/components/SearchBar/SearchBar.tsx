@@ -1,49 +1,49 @@
-import styles from "./SearchBar.module.css";
-import toast from "react-hot-toast";
+import css from "./SearchBar.module.css";
+import toast, { Toaster } from 'react-hot-toast';
 
 interface SearchBarProps {
-  onSubmit: (query: string) => void;
+    onSubmit: (query: string) => void;
 }
 
-function SearchBar({ onSubmit }: SearchBarProps) {
-  const handleSubmit = (formData: FormData) => {
-    const query = (formData.get("query") as string).trim();
+export default function SearchBar ({onSubmit}: SearchBarProps) {
+   const handleSubmin = (formData: FormData) => {
+    const query = formData.get("query") as string;
 
-    if (!query) {
-      toast.error("Please enter your search query.");
-      return;
-    }
+    const queryTrimmed = query.trim();
 
-    onSubmit(query);
-  };
+    if (queryTrimmed === '') {
+        toast.error('Please enter your search query.')
+        return
+    };
 
-  return (
-    <header className={styles.header}>
-      <div className={styles.container}>
+    onSubmit(queryTrimmed);
+   }
+
+    return <header className={css.header}>
+      <div className={css.container}>
         <a
-          className={styles.link}
+          className={css.link}
           href="https://www.themoviedb.org/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by TMDB
+         Powered by TMDB
         </a>
-        <form className={styles.form} action={handleSubmit}>
+        <form className={css.form} action={handleSubmin}>
           <input
-            className={styles.input}
+            className={css.input}
             type="text"
             name="query"
             autoComplete="off"
             placeholder="Search movies..."
             autoFocus
-          />
-          <button className={styles.button} type="submit">
-            Search
-          </button>
+        />
+        <button className={css.button} type="submit">
+           Search 
+        </button>
+        <Toaster />
         </form>
       </div>
     </header>
-  );
+    
 }
-
-export default SearchBar;
